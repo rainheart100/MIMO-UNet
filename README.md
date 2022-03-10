@@ -1,14 +1,15 @@
 # MIMO-UNet - Official Pytorch Implementation
-## Update Log
-### 20220310
+## Change Log
+### New Feature(2022.03.10)
 
-  1. 将默认MultiStepLR学习率策略调整为CosineAnnealingLR，整个训练过程学习率下降数量为余弦函数一个半周期
+  * 将默认MultiStepLR学习率策略调整为CosineAnnealingLR，整个训练过程学习率下降数量为余弦函数一个半周期
 
   ```
   scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.num_epoch, eta_min=1e-6)
   ```
-  2. batchsize@lr=16@2e-4 vs default batchsize@lr=4@1e-4
-  3. 运行方法：
+  * batchsize@lr=16@2e-4 vs default batchsize@lr=4@1e-4
+  * 验证集更名为val
+  * 运行方法
   ```
   bash run.sh
   ```
