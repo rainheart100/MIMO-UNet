@@ -64,6 +64,6 @@ if __name__ == '__main__':
 
     args.cuda = (args.gpus[0] >= 0 ) and (args.gpus[0] != -1) and torch.cuda.is_available()
     args.device = torch.device("cuda:" + str(args.gpus[0]) if args.cuda else "cpu")
-
+    print (args.device)
     print(args)
     main(args)

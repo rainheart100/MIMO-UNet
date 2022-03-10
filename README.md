@@ -7,7 +7,7 @@
   scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.num_epoch, eta_min=1e-6)
   ```
   2. batchsize@lr=16@2e-4 vs default batchsize@lr=4@1e-4
-  3. 验证集更名为val
+  3. 验证集更名为test
   4. 运行方法
   ```
   bash run.sh
