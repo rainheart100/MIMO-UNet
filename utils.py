@@ -1,5 +1,6 @@
 import time
 import numpy as np
+from collections import OrderedDict
 
 
 class Adder(object):
@@ -41,3 +42,12 @@ def check_lr(optimizer):
     for i, param_group in enumerate(optimizer.param_groups):
         lr = param_group['lr']
     return lr
+
+
+def load_model(state_model_dict):
+    new_state_dict = OrderedDict()
+    for k, v in state_model_dict.items():
+        if k.startswith('module'):
+            name = k[7:]
+            new_state_dict[name] = v
+    return new_state_dict

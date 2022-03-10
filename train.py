@@ -2,7 +2,7 @@ import os
 import torch
 
 from data import train_dataloader
-from utils import Adder, Timer, check_lr
+from utils import Adder, Timer, check_lr, load_model
 from torch.utils.tensorboard import SummaryWriter
 from valid import _valid
 import torch.nn.functional as F
@@ -24,7 +24,7 @@ def _train(model, args):
         epoch = state['epoch']
         optimizer.load_state_dict(state['optimizer'])
         scheduler.load_state_dict(state['scheduler'])
-        model.load_state_dict(state['model'])
+        model.load_state_dict(load_model(state['model']))
         print('Resume from %d'%epoch)
         epoch += 1
 
@@ -41,7 +41,6 @@ def _train(model, args):
     best_psnr=-1
 
     for epoch_idx in range(epoch, args.num_epoch + 1):
-
         epoch_timer.tic()
         iter_timer.tic()
         for iter_idx, batch_data in enumerate(dataloader):

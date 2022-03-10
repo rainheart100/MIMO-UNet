@@ -2,7 +2,7 @@ import os
 import torch
 from torchvision.transforms import functional as F
 import numpy as np
-from utils import Adder
+from utils import Adder, load_model
 from data import test_dataloader
 from skimage.metrics import peak_signal_noise_ratio
 import time
@@ -10,7 +10,7 @@ import time
 
 def _eval(model, args):
     state_dict = torch.load(args.test_model)
-    model.load_state_dict(state_dict['model'])
+    model.load_state_dict(load_model(state_dict['model']))
     if (args.device.type == 'cuda') and len(args.gpus) > 1:
         model = torch.nn.DataParallel(model, args.gpus)
     # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
