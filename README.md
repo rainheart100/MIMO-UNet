@@ -1,7 +1,6 @@
 # MIMO-UNet - Official Pytorch Implementation
 ## Change Log
 ### New Feature(2022.03.10)
----
   1. 将默认MultiStepLR学习率策略调整为CosineAnnealingLR，整个训练过程学习率下降数量为余弦函数一个半周期
 
   ```
