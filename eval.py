@@ -14,7 +14,7 @@ def _eval(model, args):
     model.to(args.device)
     if (args.device.type == 'cuda') and len(args.gpus) > 1:
         model = torch.nn.DataParallel(model, args.gpus)
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     dataloader = test_dataloader(args.data_dir, batch_size=1, num_workers=0)
     torch.cuda.empty_cache()
     adder = Adder()
@@ -25,7 +25,7 @@ def _eval(model, args):
         # Hardware warm-up
         for iter_idx, data in enumerate(dataloader):
             input_img, label_img, _ = data
-            input_img = input_img.to(device)
+            input_img = input_img.to(args.device)
             tm = time.time()
             _ = model(input_img)
             _ = time.time() - tm
