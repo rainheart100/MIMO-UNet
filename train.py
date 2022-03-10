@@ -18,7 +18,7 @@ def _train(model, args):
     dataloader = train_dataloader(args.data_dir, args.batch_size, args.num_worker)
     max_iter = len(dataloader)
     # scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, args.lr_steps, args.gamma)
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=3000, eta_min=1e-6)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.num_epoch, eta_min=1e-6)
     epoch = 1
     if args.resume:
         state = torch.load(args.resume)

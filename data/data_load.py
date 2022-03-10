@@ -44,7 +44,7 @@ def test_dataloader(path, batch_size=1, num_workers=0):
 
 def valid_dataloader(path, batch_size=1, num_workers=0):
     dataloader = DataLoader(
-        DeblurDataset(os.path.join(path, 'valid')),
+        DeblurDataset(os.path.join(path, 'test')),
         batch_size=batch_size,
         shuffle=False,
         num_workers=num_workers
