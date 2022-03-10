@@ -28,7 +28,6 @@ def _train(model, args):
         print('Resume from %d'%epoch)
         epoch += 1
 
-    model.to(args.device)
     if (args.device.type == 'cuda') and len(args.gpus) > 1:
         model = torch.nn.DataParallel(model, args.gpus)
 

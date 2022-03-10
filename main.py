@@ -21,6 +21,7 @@ def main(args):
         os.makedirs(args.result_dir)
 
     model = build_net(args.model_name)
+    model.to(args.device)
     # print(model)
     # if torch.cuda.is_available():
     #     model.cuda()
