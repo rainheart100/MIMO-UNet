@@ -9,7 +9,6 @@ import torch.nn.functional as F
 
 
 def _train(model, args):
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     criterion = torch.nn.L1Loss()
     optimizer = torch.optim.Adam(model.parameters(),
                                  lr=args.learning_rate,
@@ -29,6 +28,10 @@ def _train(model, args):
         print('Resume from %d'%epoch)
         epoch += 1
 
+    model.to(args.device)
+    if (args.device.type == 'cuda') and len(args.gpus) > 1:
+        model = torch.nn.DataParallel(model, args.gpus)
+
     writer = SummaryWriter()
     epoch_pixel_adder = Adder()
     epoch_fft_adder = Adder()
@@ -45,8 +48,8 @@ def _train(model, args):
         for iter_idx, batch_data in enumerate(dataloader):
 
             input_img, label_img = batch_data
-            input_img = input_img.to(device)
-            label_img = label_img.to(device)
+            input_img = input_img.to(args.device)
+            label_img = label_img.to(args.device)
 
             optimizer.zero_grad()
             pred_img = model(input_img)

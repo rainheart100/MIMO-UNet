@@ -22,8 +22,8 @@ def main(args):
 
     model = build_net(args.model_name)
     # print(model)
-    if torch.cuda.is_available():
-        model.cuda()
+    # if torch.cuda.is_available():
+    #     model.cuda()
     if args.mode == 'train':
         _train(model, args)
 
@@ -51,6 +51,8 @@ if __name__ == '__main__':
     parser.add_argument('--resume', type=str, default='')
     parser.add_argument('--gamma', type=float, default=0.5)
     parser.add_argument('--lr_steps', type=list, default=[(x+1) * 500 for x in range(3000//500)])
+    parser.add_argument('--gpus', type=lambda s: [int(item.strip()) for item in s.split(',')], default='0',
+                    help='comma delimited of gpu ids to use. Use "-1" for cpu usage')
 
     # Test
     parser.add_argument('--test_model', type=str, default='weights/MIMO-UNet.pkl')
@@ -59,5 +61,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
     args.model_save_dir = os.path.join('results/', args.model_name, 'weights/')
     args.result_dir = os.path.join('results/', args.model_name, 'result_image/')
+
+    args.cuda = (args.gpus[0] >= 0 ) and (args.gpus[0] != -1) and torch.cuda.is_available()
+    args.device = torch.device("cuda:" + str(args.gpus[0]) if args.cuda else "cpu")
+
     print(args)
     main(args)

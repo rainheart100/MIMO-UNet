@@ -11,6 +11,9 @@ import time
 def _eval(model, args):
     state_dict = torch.load(args.test_model)
     model.load_state_dict(state_dict['model'])
+    model.to(args.device)
+    if (args.device.type == 'cuda') and len(args.gpus) > 1:
+        model = torch.nn.DataParallel(model, args.gpus)
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     dataloader = test_dataloader(args.data_dir, batch_size=1, num_workers=0)
     torch.cuda.empty_cache()
