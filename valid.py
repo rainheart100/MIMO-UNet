@@ -7,7 +7,7 @@ from skimage.metrics import peak_signal_noise_ratio
 
 
 def _valid(model, args, ep):
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     gopro = valid_dataloader(args.data_dir, batch_size=1, num_workers=0)
     model.eval()
     psnr_adder = Adder()
@@ -16,7 +16,7 @@ def _valid(model, args, ep):
         print('Start GoPro Evaluation')
         for idx, data in enumerate(gopro):
             input_img, label_img = data
-            input_img = input_img.to(device)
+            input_img = input_img.to(args.device)
             if not os.path.exists(os.path.join(args.result_dir, '%d' % (ep))):
                 os.mkdir(os.path.join(args.result_dir, '%d' % (ep)))
 

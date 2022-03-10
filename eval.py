@@ -37,7 +37,7 @@ def _eval(model, args):
         for iter_idx, data in enumerate(dataloader):
             input_img, label_img, name = data
 
-            input_img = input_img.to(device)
+            input_img = input_img.to(args.device)
 
             tm = time.time()
 
