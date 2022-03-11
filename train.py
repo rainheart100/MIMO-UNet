@@ -90,11 +90,11 @@ def _train(model, args):
                 iter_timer.tic()
                 iter_pixel_adder.reset()
                 iter_fft_adder.reset()
-        # overwrite_name = os.path.join(args.model_save_dir, 'model.pkl')
-        # torch.save({'model': model.state_dict(),
-        #             'optimizer': optimizer.state_dict(),
-        #             'scheduler': scheduler.state_dict(),
-        #             'epoch': epoch_idx}, overwrite_name)
+        overwrite_name = os.path.join(args.model_save_dir, 'model.pkl')
+        torch.save({'model': model.state_dict(),
+                    'optimizer': optimizer.state_dict(),
+                    'scheduler': scheduler.state_dict(),
+                    'epoch': epoch_idx}, overwrite_name)
 
         if epoch_idx % args.save_freq == 0:
             save_name = os.path.join(args.model_save_dir, 'model_%d.pkl' % epoch_idx)
